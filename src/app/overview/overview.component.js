@@ -19,26 +19,28 @@
     vm.getMemberStatusName = getMemberStatusName;
     vm.joinList = joinList;
     vm.leave = leave;
-
+    vm.refreshData = refreshData;
+    
     activate();
 
     function activate() {
-      refreshData();
+      vm.refreshData();
       vm.clusterStatus = {};
       vm.membersTableParams = new NgTableParams();
-      vm.refreshData = refreshData;
       vm.seenByTableParams = new NgTableParams();
       vm.unreachableTableParams = new NgTableParams();
     }
 
     function down(member) {
       ClusterService
-        .down(vm.getAddressAsString(member));
-    }
+        .down(vm.getAddressAsString(member))
+        .finally(() => vm.refreshData(false));
+      }
 
     function leave(member) {
       ClusterService
-        .leave(vm.getAddressAsString(member));
+        .leave(vm.getAddressAsString(member))
+        .finally(() => vm.refreshData(false));
     }
 
     function getAddressAsString(address) {
@@ -79,10 +81,12 @@
         .then(data => {
           vm.clusterStatus = data.data;
           refreshTableParams();
+        })
+        .finally(() => {
           if (withoutAutoRefresh) {
             return;
           }
-          $timeout(vm.refreshData, 5000);
+          $timeout(vm.refreshData, 2000);
         });
     }
   }
