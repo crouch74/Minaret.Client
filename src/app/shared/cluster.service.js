@@ -10,13 +10,25 @@
   function ClusterService($http, API_SERVER) {
     const api = `${API_SERVER}cluster`;
     return {
+      down,
       getState,
-      getRoleMembers
+      getRoleMembers,
+      leave
     };
 
     function getState() {
       return $http
         .get(api);
+    }
+
+    function leave(address) {
+      return $http
+        .post(`${api}/leave`, {address});
+    }
+
+    function down(address) {
+      return $http
+        .post(`${api}/down`, {address});
     }
 
     function getRoleMembers(role) {

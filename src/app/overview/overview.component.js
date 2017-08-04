@@ -14,9 +14,11 @@
   function OverviewController(ClusterService, MEMBER_STATUS, NgTableParams, $timeout) {
     const vm = this;
 
+    vm.down = down;
     vm.getAddressAsString = getAddressAsString;
     vm.getMemberStatusName = getMemberStatusName;
     vm.joinList = joinList;
+    vm.leave = leave;
 
     activate();
 
@@ -24,9 +26,19 @@
       refreshData();
       vm.clusterStatus = {};
       vm.membersTableParams = new NgTableParams();
-      vm.unreachableTableParams = new NgTableParams();
-      vm.seenByTableParams = new NgTableParams();
       vm.refreshData = refreshData;
+      vm.seenByTableParams = new NgTableParams();
+      vm.unreachableTableParams = new NgTableParams();
+    }
+
+    function down(member) {
+      ClusterService
+        .down(vm.getAddressAsString(member));
+    }
+
+    function leave(member) {
+      ClusterService
+        .leave(vm.getAddressAsString(member));
     }
 
     function getAddressAsString(address) {

@@ -22,6 +22,9 @@
       <td title="'Status'">
         {{vm.getMemberStatusName(member.status)}}
       </td>
+      <td title="'Actions'">
+        <button class="btn btn-default btn-sm" ng-click="vm.leave(member.address)">Leave</button>
+      </td>
     </tr>
   </table>
 </div>
@@ -29,14 +32,20 @@
   <h3>Unreachable</h3>
   <table ng-table="vm.unreachableTableParams" class="table table-condensed table-bordered table-striped" show-filter="false">
     <tr ng-repeat="member in $data">
-      <td title="'System'">
-        {{member.system}}
+      <td title="'UId'">
+        {{member.uniqueAddress.uid}}
       </td>
-      <td title="'IP'">
-        {{member.host}}
+      <td title="'Address'">
+        {{vm.getAddressAsString(member.address)}}
       </td>
-      <td title="'Port'">
-        {{member.port}}
+      <td title="'Roles'">
+        {{vm.joinList(member.roles)}}
+      </td>
+      <td title="'Status'">
+        {{vm.getMemberStatusName(member.status)}}
+      </td>
+      <td title="'Actions'">
+        <button class="btn btn-default btn-sm" ng-click="vm.down(member.address)">Down</button>
       </td>
     </tr>
   </table>
