@@ -1,0 +1,59 @@
+<h1 class="row">
+  Cluster Status
+  <a ng-click="vm.refreshData(true)" class="button glyphicon glyphicon-refresh"></a>
+</h1>
+<div class="row">
+  <h3>Leader</h3>
+  {{vm.getAddressAsString(vm.clusterStatus.leader)}}
+</div>
+<div class="row">
+  <h3>Members</h3>
+  <table ng-table="vm.membersTableParams" class="table table-condensed table-bordered table-striped" show-filter="false">
+    <tr ng-repeat="member in $data">
+      <td title="'UId'">
+        {{member.uniqueAddress.uid}}
+      </td>
+      <td title="'Address'">
+        {{vm.getAddressAsString(member.address)}}
+      </td>
+      <td title="'Roles'">
+        {{vm.joinList(member.roles)}}
+      </td>
+      <td title="'Status'">
+        {{vm.getMemberStatusName(member.status)}}
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="row">
+  <h3>Unreachable</h3>
+  <table ng-table="vm.unreachableTableParams" class="table table-condensed table-bordered table-striped" show-filter="false">
+    <tr ng-repeat="member in $data">
+      <td title="'System'">
+        {{member.system}}
+      </td>
+      <td title="'IP'">
+        {{member.host}}
+      </td>
+      <td title="'Port'">
+        {{member.port}}
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="row">
+  <h3>Seen by</h3>
+  <table ng-table="vm.seenByTableParams" class="table table-condensed table-bordered table-striped" show-filter="false">
+    <tr ng-repeat="member in $data">
+      <td title="'System'">
+        {{member.system}}
+      </td>
+      <td title="'IP'">
+        {{member.host}}
+      </td>
+      <td title="'Port'">
+        {{member.port}}
+      </td>
+    </tr>
+  </table>
+</div>
