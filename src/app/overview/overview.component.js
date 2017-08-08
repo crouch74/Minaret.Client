@@ -20,7 +20,7 @@
     vm.joinList = joinList;
     vm.leave = leave;
     vm.refreshData = refreshData;
-    
+
     activate();
 
     function activate() {
@@ -35,7 +35,7 @@
       ClusterService
         .down(vm.getAddressAsString(member))
         .finally(() => vm.refreshData(false));
-      }
+    }
 
     function leave(member) {
       ClusterService
